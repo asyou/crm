@@ -1,0 +1,22 @@
+<form id="batch-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Admin_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-admin_id" data-rule="required" data-source="auth/admin" data-field="nickname" data-format-item="{username} - {nickname}" class="form-control selectpage" name="row[admin_id]" type="text" value="" placeholder="选择负责人">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Tips')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-note" class="form-control" rows="3" disabled>1、未分配的线索可以自由认领，也可以批量分配，分配后将由指定的负责人跟进；&#13;2、已分配的线索再次分配会重新指定负责人，原负责人无法再跟进。</textarea>
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

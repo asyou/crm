@@ -1,0 +1,82 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Customers_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-customers_id" data-rule="required" data-source="customers/customers/index" data-format-item="{name} - {mobile}" class="form-control selectpage" name="row[customers_id]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Trace_note')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-trace_note" data-rule="required" class="form-control" name="row[trace_note]" rows="5"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Next_trace_note')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-next_trace_note" data-rule="required" class="form-control" name="row[next_trace_note]" rows="5"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Next_trace_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-next_trace_time" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[next_trace_time]" type="text" value="{:date('Y-m-d H:i:s')}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Trace_status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="traceStatusList" item="vo"}
+            <label for="row[trace_status]-{$key}"><input id="row[trace_status]-{$key}" name="row[trace_status]" type="radio" value="{$key}" {in name="key" value="0"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group" data-favisible="trace_status=1">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Trace_status_info')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            <label for="row[trace_status_info]-10"><input id="row[trace_status_info]-10" name="row[trace_status_info]" type="radio" value="10" /> {:__('Trace_status_info 10')}</label> 
+            <label for="row[trace_status_info]-11"><input id="row[trace_status_info]-11" name="row[trace_status_info]" type="radio" value="11" /> {:__('Trace_status_info 11')}</label> 
+            <label for="row[trace_status_info]-12"><input id="row[trace_status_info]-12" name="row[trace_status_info]" type="radio" value="12" /> {:__('Trace_status_info 12')}</label> 
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group" data-favisible="trace_status=2">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Trace_status_info')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            <label for="row[trace_status_info]-20"><input id="row[trace_status_info]-20" name="row[trace_status_info]" type="radio" value="20" /> {:__('Trace_status_info 20')}</label> 
+            <label for="row[trace_status_info]-21"><input id="row[trace_status_info]-21" name="row[trace_status_info]" type="radio" value="21" /> {:__('Trace_status_info 21')}</label> 
+            <label for="row[trace_status_info]-22"><input id="row[trace_status_info]-22" name="row[trace_status_info]" type="radio" value="22" /> {:__('Trace_status_info 22')}</label> 
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group" data-favisible="trace_status=3">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Trace_status_info')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            <label for="row[trace_status_info]-30"><input id="row[trace_status_info]-30" name="row[trace_status_info]" type="radio" value="30" /> {:__('Trace_status_info 30')}</label> 
+            <label for="row[trace_status_info]-31"><input id="row[trace_status_info]-31" name="row[trace_status_info]" type="radio" value="31" /> {:__('Trace_status_info 31')}</label> 
+            <label for="row[trace_status_info]-32"><input id="row[trace_status_info]-32" name="row[trace_status_info]" type="radio" value="32" /> {:__('Trace_status_info 32')}</label> 
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>
