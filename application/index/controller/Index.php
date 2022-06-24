@@ -70,8 +70,7 @@ class Index extends Frontend
                     'name' => $clues['name'],
                     'admin_id' => $res[0]['id']
                 ];
-                $client_id = $adminModel->where(['id'=>$res[0]['id']])->value('client_id');
-                Events::onMessage($client_id,json_encode($data));
+                Events::onMessage(null,json_encode($data));
             }
             $result = $customersModel->allowField(true)->save($clues);
         }

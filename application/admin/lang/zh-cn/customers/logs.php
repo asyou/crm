@@ -10,6 +10,7 @@ return [
     'Trace_status 2'  => '微信沟通',
     'Trace_status 3'  => 'QQ沟通',
     'Trace_status 4'  => '线下会面',
+    'Trace_status 5'  => '无效线索',
     'Trace_status_info'    => '状态详情',
     'Trace_status_info 0'  => '未设置',
     'Trace_status_info 10' => '电话无人接听',

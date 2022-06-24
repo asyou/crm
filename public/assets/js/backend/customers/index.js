@@ -39,7 +39,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         // {field: 'admin.nickname', title: __('Admin.nickname'), operate: 'LIKE'},
                         // {field: 'last_admin_change', title: __('Last_admin_change'), formatter: Table.api.formatter.datetime},
                         {field: 'entry_time', title: __('Entry_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
-                        {field: 'trace_status', title: __('Trace_status'), searchList: {"0":__('Trace_status 0'),"1":__('Trace_status 1'),"2":__('Trace_status 2'),"3":__('Trace_status 3'),"4":__('Trace_status 4')}, formatter: Table.api.formatter.status},
+                        {field: 'trace_status', title: __('Trace_status'), searchList: {"0":__('Trace_status 0'),"1":__('Trace_status 1'),"2":__('Trace_status 2'),"3":__('Trace_status 3'),"4":__('Trace_status 4'),"5":__('Trace_status 5')}, formatter: Table.api.formatter.status},
                         {field: 'allot_status', title: __('Allot_status'), searchList: {"0":__('Allot_status 0'),"1":__('Allot_status 1')}, formatter: Table.api.formatter.status},
                         {field: 'status', title: __('Status'), searchList: {"0":__('Status 0'),"1":__('Status 1'),"2":__('Status 2')}, formatter: Table.api.formatter.status},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},

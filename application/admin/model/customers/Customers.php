@@ -41,7 +41,7 @@ class Customers extends Model
 
     public function getTraceStatusList()
     {
-        return ['0' => __('Trace_status 0'), '1' => __('Trace_status 1'), '2' => __('Trace_status 2'), '3' => __('Trace_status 3'), '4' => __('Trace_status 4')];
+        return ['0' => __('Trace_status 0'), '1' => __('Trace_status 1'), '2' => __('Trace_status 2'), '3' => __('Trace_status 3'), '4' => __('Trace_status 4'), '5' => __('Trace_status 5')];
     }
 
     public function getAllotStatusList()

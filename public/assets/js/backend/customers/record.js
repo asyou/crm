@@ -34,7 +34,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'mobile', title: __('Mobile'), operate: 'LIKE'},
                         {field: 'source', title: __('Source'), searchList: {"0":__('Source 0'),"1":__('Source 1'),"2":__('Source 2'),"3":__('Source 3'),"4":__('Source 4')}, formatter: Table.api.formatter.normal},
                         {field: 'created.nickname', title: __('Created.nickname'), searchList: function(column){return Template('kefustpl',{})}},
-                        {field: 'trace_status', title: __('Trace_status'), searchList: {"0":__('Trace_status 0'),"1":__('Trace_status 1'),"2":__('Trace_status 2'),"3":__('Trace_status 3'),"4":__('Trace_status 4')}, formatter: Table.api.formatter.status},
+                        {field: 'trace_status', title: __('Trace_status'), searchList: {"0":__('Trace_status 0'),"1":__('Trace_status 1'),"2":__('Trace_status 2'),"3":__('Trace_status 3'),"4":__('Trace_status 4'),"5":__('Trace_status 5')}, formatter: Table.api.formatter.status},
                         // {field: 'allot_status', title: __('Allot_status'), searchList: {"0":__('Allot_status 0'),"1":__('Allot_status 1')}, formatter: Table.api.formatter.status},
                         // {field: 'last_admin_name', title: __('Last_admin_name'), operate: 'LIKE'},
                         // {field: 'last_admin_change', title: __('Last_admin_change')},

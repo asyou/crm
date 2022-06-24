@@ -16,13 +16,14 @@
                         <td>{$vo.name}</td>
                         <td>{$vo.trace_note}</td>
                         <td>{$vo.next_trace_note}</td>
-                        <td>{$vo.next_trace_time|date='Y-m-d H:i',###}</td>
+                        <td>{notempty name="vo.next_trace_time"}{$vo.next_trace_time|date='Y-m-d H:i',###}{else/}-{/notempty}</td>
                         <td>{switch name="vo.trace_status"}
                                 {case value="0"}<span class="text-primary">待跟进</span>{/case}
                                 {case value="1"}<span class="text-success">电话访谈</span>{/case}
                                 {case value="2"}<span class="text-danger">微信沟通</span>{/case}
                                 {case value="3"}<span class="text-warning">QQ沟通</span>{/case}
                                 {case value="4"}<span class="text-info">线下会面</span>{/case}
+                                {case value="5"}<span class="text-black">无效线索</span>{/case}
                             {/switch}</td>
                         <td>{$vo.nickname}</td>
                         <td>{$vo.createtime|date='Y-m-d H:i',###}</td>
@@ -39,19 +40,19 @@
                             <input id="c-customers_id" data-rule="required" data-source="customers/customers/index" data-format-item="{name} - {mobile}" class="form-control selectpage" name="row[customers_id]" type="text" value="{$row.info.id|htmlentities}" disabled>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" data-favisible="trace_status<5">
                         <label class="control-label col-xs-12 col-sm-2">{:__('Trace_note')}:</label>
                         <div class="col-xs-12 col-sm-8">
                             <textarea id="c-trace_note" data-rule="required" class="form-control" name="row[trace_note]" rows="5"></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" data-favisible="trace_status<5">
                         <label class="control-label col-xs-12 col-sm-2">{:__('Next_trace_note')}:</label>
                         <div class="col-xs-12 col-sm-8">
                             <textarea id="c-next_trace_note" data-rule="required" class="form-control" name="row[next_trace_note]" rows="5"></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" data-favisible="trace_status<5">
                         <label class="control-label col-xs-12 col-sm-2">{:__('Next_trace_time')}:</label>
                         <div class="col-xs-12 col-sm-8">
                             <input id="c-next_trace_time" data-rule="required;" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[next_trace_time]" type="text" value="">

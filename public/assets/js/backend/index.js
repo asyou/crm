@@ -77,6 +77,16 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'adminlte', 'form'], functi
                         }
                     })
                     break;
+                case 'notice':
+                    Layer.open({
+                      type: 1,
+                      title:  false,
+                      closeBtn: 0,
+                      shadeClose: true,
+                      area: ['425px', '567px'],
+                      content: '<div style="text-align:center;padding:50px;background:url(/assets/img/xsxb.png?20220623);width:425px;height:567px"><div style="padding-top:335px;color:#fff">'+data.time+'</div><div style="padding-top:10px;"><h2>恭喜'+data.nickname+'跟进的学生</h2></div><div><h1 style="font-weight:bold;color:#DD3F4A">['+data.name+']已成功报名</h1></div></div>'
+                    });
+                    break;
             }
         }
     }

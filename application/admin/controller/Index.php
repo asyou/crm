@@ -62,7 +62,7 @@ class Index extends Backend
         $user = \think\Db::name('admin')->field(['id','status'])->where(['id'=>$this->auth->id])->find();
         $this->assignconfig('user',$user);
         // $this->assignconfig('offset_time',Config::get('site.offset_time'));
-        $this->assignconfig('wsUrl',isHttps()?'wss://'.$_SERVER['HTTP_HOST'].'/wss':'ws://'.$_SERVER['HTTP_HOST'].':1236');
+        $this->assignconfig('wsUrl',isHttps()?'wss://'.$_SERVER['HTTP_HOST'].'/wss':'ws://'.$_SERVER['HTTP_HOST'].':39200');
         $this->view->assign('user',$user);
         return $this->view->fetch();
     }

@@ -35,7 +35,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'trace_note', title: __('Trace_note'), operate: false},
                         {field: 'next_trace_note', title: __('Next_trace_note'), operate: false},
                         {field: 'next_trace_time', title: __('Next_trace_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
-                        {field: 'trace_status', title: __('Trace_status'), searchList: {"0":__('Trace_status 0'),"1":__('Trace_status 1'),"2":__('Trace_status 2'),"3":__('Trace_status 3'),"4":__('Trace_status 4')}, formatter: Table.api.formatter.status},
+                        {field: 'trace_status', title: __('Trace_status'), searchList: {"0":__('Trace_status 0'),"1":__('Trace_status 1'),"2":__('Trace_status 2'),"3":__('Trace_status 3'),"4":__('Trace_status 4'),"5":__('Trace_status 5')}, formatter: Table.api.formatter.status},
                         {field: 'trace_status_info', title: __('Trace_status_info'), searchList: {
                             "0":__('Trace_status_info 0'),
                             "10":__('Trace_status_info 10'),

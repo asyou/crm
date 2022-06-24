@@ -2,10 +2,7 @@
 namespace app\push\controller;
 use \think\Controller;
 use \think\Config;
-use \think\Db;
 use \GatewayWorker\Lib\Gateway;
-use \app\admin\model\chat\Group;
-use \app\admin\model\chat\Content;
 
 class Events extends Controller
 {
@@ -16,19 +13,13 @@ class Events extends Controller
      */
     public static function onMessage($client_id, $data)
     {
-        $adminModel   = new \app\admin\model\Admin;
-        $custoemrsModel = new \app\admin\model\customers\Index;
         $logsModel = new \app\admin\model\customers\Logs;
-
         $arr = json_decode($data, true);
         switch($arr['type']) {
-            case 'authorize':   // 首次连接，保存或更新用户client_id
-                // $arr = ['type'=>'authorize', 'admin_id'=>'用户ID'];
-                $adminModel->save(['client_id'=>$client_id],['id'=>$arr['admin_id']]);
+            case 'authorize':   // 首次连接，uid绑定client_id $arr = ['type'=>'authorize', 'admin_id'=>'用户ID'];
                 Gateway::bindUid($client_id,$arr['admin_id']);
                 break;
-            case 'heartbeat':    // 心跳检测
-                // $arr = ['type'=>'heartbeat', 'msg'=>'ping'];
+            case 'heartbeat':    // 心跳检测 $arr = ['type'=>'heartbeat', 'msg'=>'ping'];
                 $rsp = [
                     'type' => 'heartbeat',
                     'msg'  => 'pong'
@@ -36,10 +27,8 @@ class Events extends Controller
                 // 心跳检测，服务器可以不作响应
                 // Gateway::sendToClient($client_id,json_encode($rsp));
                 break;
-            case 'clues': // 线索分配
-                // $arr = ['type'=>'clues', 'name'=>'客户姓名', 'admin_id'=>'销售ID'];
-                $to_client_id = $adminModel->where(['id'=>$arr['admin_id']])->value('client_id');
-                if ($to_client_id && Gateway::isOnline($to_client_id)) {
+            case 'clues': // 线索分配 $arr = ['type'=>'clues', 'name'=>'客户姓名', 'admin_id'=>'销售ID'];
+                if (Gateway::isUidOnline($arr['admin_id'])) {
                     $rsp = [
                         'type' => 'clues',
                         'msg' => '接收到新的线索',
@@ -47,16 +36,15 @@ class Events extends Controller
                             'name' => $arr['name']
                         ]
                     ];
-                    Gateway::sendToClient($to_client_id,json_encode($rsp));
+                    Gateway::sendToUid($arr['admin_id'],json_encode($rsp));
                 }
                 break;
-            case 'schedule':
-                // $arr = ['type'=>'schedule', 'admin_id'=>'销售ID', 'msg'=>'check'];
+            case 'schedule':    // 日程提醒 $arr = ['type'=>'schedule', 'admin_id'=>'销售ID', 'msg'=>'check'];
                 $customers = $logsModel
                     ->alias('a')
                     ->field(['a.id','a.trace_note','a.next_trace_note','a.next_trace_time','b.name'])
                     ->join('__CUSTOMERS__ b','a.customers_id=b.id')
-                    ->where(['a.admin_id'=>$arr['admin_id'],'a.next_trace_time'=>['BETWEEN',[time(),time()+(Config::get('site.offset_time')/1000)]],'b.status'=>'0'])
+                    ->where(['a.admin_id'=>$arr['admin_id'],'a.reminded'=>'0','a.next_trace_time'=>['BETWEEN',[time(),time()+(Config::get('site.offset_time')/1000)]],'b.status'=>'0','b.trace_status'=>['NEQ','5']])
                     ->order(['a.next_trace_time'=>'ASC'])
                     ->select();
                 if (count($customers) > 0) {
@@ -65,8 +53,20 @@ class Events extends Controller
                         'msg' => '新日程提醒',
                         'data' => $customers
                     ];
-                    Gateway::sendToClient($client_id,json_encode($rsp));
+                    Gateway::sendToUid($arr['admin_id'],json_encode($rsp));
+                    foreach($customers as $val) {
+                        $logsModel->where(['id'=>$val['id']])->data(['reminded'=>'1'])->update();
+                    }
                 }
+                break;
+            case 'notice':  // 线索成交广播 $arr = ['type'=>'notice', 'msg'=>'广播内容'];
+                $rsp = [
+                    'type' => 'notice',
+                    'name' => $arr['name'],
+                    'nickname' => $arr['nickname'],
+                    'time' => date('Y-m-d H:i',time())
+                ];
+                Gateway::sendToAll(json_encode($rsp));
                 break;
         }
     }

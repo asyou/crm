@@ -3,6 +3,7 @@
 namespace app\admin\controller\customers;
 
 use app\common\controller\Backend;
+use app\push\controller\Events;
 use think\Db;
 
 /**
@@ -117,6 +118,12 @@ class Traded extends Backend
                                 'msg' => "恭喜{$nickname}跟进的客户〖{$row->name}〗已经成交！"
                             ];
                             $this->noticesModel->save($notices);
+                            $data = [
+                                'type' => 'notice',
+                                'name' => "{$row->name}",
+                                'nickname' => "{$nickname}"
+                            ];
+                            Events::onMessage(null,json_encode($data));
                         }
                     }
                     Db::commit();

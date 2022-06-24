@@ -9,41 +9,38 @@ class Index extends Worker
 {
     public function __construct()
     {
-        // $ip = '116.255.245.183';
-        $ip = '127.0.0.1';
-        // 初始化register
-        new Register('text://'.$ip.':1238');
-        // 初始化 bussinessWorker 进程
+        // 初始化register进程
+        $register = new Register('text://0.0.0.0:1236');
+
+        // 初始化bussinessWorker进程，负责处理业务逻辑
         $worker = new BusinessWorker();
-        // 进程名称，方便status查看
-        $worker->name = 'GatewayChat';
-        // 进程数量
-        $worker->count = 1;
-        // 注册服务地址
-        $worker->registerAddress = $ip.':1238';
-        //设置处理业务的类,此处制定Events的命名空间
+        $worker->name = 'BusinessWorker';
+        $worker->count = 2;
+        $worker->registerAddress = '127.0.0.1:1236';
         $worker->eventHandler = '\app\push\controller\Events';
-        // 初始化 gateway 进程
-        $gateway = new Gateway("websocket://".$ip.":1236");
-        // 进程名称，方便status查看
-        $gateway->name = 'push';
-        // 进程数量
-        $gateway->count = 1;
-        // 内网IP，默认127.0.0.1，分布式部署时必须填写真实内网IP
-        $gateway->lanIp = $ip;
-        // 监听本机端口的起始端口，与进程数量累加（如进程数量为2，则监听端口为2900、2901）
+
+        // 初始化Gateway进程，负责维护客户端连接/网络IO
+        // $context = array(
+        //     'ssl' => array(
+        //         // 请使用绝对路径
+        //         'local_cert'        => '磁盘路径/server.pem', // 也可以是crt文件
+        //         'local_pk'          => '磁盘路径/server.key',
+        //         'verify_peer'       => false,
+        //         'allow_self_signed' => true, //如果是自签名证书需要开启此选项
+        //     )
+        // );
+        // $gateway = new Gateway("websocket://0.0.0.0:443", $context);
+        // $gateway->transport = 'ssl';
+        $gateway = new Gateway("websocket://0.0.0.0:39200");
+        $gateway->name = 'Gateway';
+        $gateway->count = 2;
+        $gateway->lanIp = '127.0.0.1';
         $gateway->startPort = 2900;
-        // 心跳检测的周期，最好小于60秒
-        // 服务器实际关闭连接的时间为pingInterval*pingNotResponseLimit，误差为pingInterval
-        // 以下配置的意思为客户端30秒无通讯则服务器主动下发1次检测，超过60秒无通讯则关闭连接
-        // 需注意不同浏览器的稳定性可能不同（电脑长时间空闲关闭显示器后，firefox相当稳定，chrome则反复关闭、自动连接）
+        $gateway->registerAddress = '127.0.0.1:1236';
         $gateway->pingInterval = 30;
-        // 客户端无任何数据通讯的最大次数
         $gateway->pingNotResponseLimit = 1;
-        // 服务器下发检测的数据
         $gateway->pingData = json_encode(['type'=>'heartbeat','msg'=>'ping']);
-        // 注册地址
-        $gateway->registerAddress = $ip.':1238';
+
         // 运行所有Worker;
         Worker::runAll();
     }

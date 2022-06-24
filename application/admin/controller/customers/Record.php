@@ -124,13 +124,12 @@ class Record extends Backend
                         $params['admin_id'] = $res[0]['id'];
                         $params['allot_status'] = '1';
                         // 发送线索分配提醒
-                        $client_id = $this->adminModel->where(['id'=>$this->auth->id])->value('client_id');
                         $data = [
                             'type' => 'clues',
                             'name' => $params['name'],
                             'admin_id' => $res[0]['id']
                         ];
-                        Events::onMessage($client_id,json_encode($data));
+                        Events::onMessage(null,json_encode($data));
                     }
                     $params['created_id'] = $this->auth->id;
                     $result = $this->model->allowField(true)->save($params);
